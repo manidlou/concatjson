@@ -51,8 +51,7 @@ ser.on('data', (dat) => {
   // dat is stringified JSON
 })
 ```
-######Append object(s) to a file
-
+#####_append object(s) to a file_
 ```js
 const cj = require('concatjson')
 
