@@ -50,5 +50,6 @@ function serialize () {
 
 module.exports = {
   parse: parse,
-  serialize: serialize
+  serialize: serialize,
+  stringify: serialize
 }

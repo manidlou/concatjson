@@ -38,9 +38,11 @@ fs.createReadStream('./somefile').pipe(cj.parse()).on('error', (err) => {
 ```
 **concatjson.serialize()**
 
+alias: `concatjson.stringify()`
+
  * `@return` {[Stream.Transform](https://nodejs.org/api/stream.html#stream_class_stream_transform)} a Transform stream
 
-serializes data and emits stringified JSON objects.
+accepts objects and emits stringified JSON objects.
 
 ```js
 const cj = require('concatjson')

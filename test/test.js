@@ -148,3 +148,22 @@ test('+ serialize() > should serialize data and emit stringified JSON objects', 
     })
   })
 })
+
+test('+ stringify() alias > should serialize data and emit stringified JSON objects', (t) => {
+  var obj1 = {id: 1, name: 'one', more: {has: 'nested', stuff: {corge: {thud: 'waldo'}}}}
+  var obj2 = {id: 2, name: 'two', more: {has: 'nested', stuff: {foo: 'bar'}}}
+  var ser = cj.stringify()
+  ser.write(obj1)
+  ser.write(obj2)
+  ser.end()
+  ser.on('error', (err) => {
+    t.error(err)
+  })
+  ser.once('data', (dat) => {
+    t.deepEqual(dat, JSON.stringify(obj1))
+    ser.once('data', (dat) => {
+      t.deepEqual(dat, JSON.stringify(obj2))
+      t.end()
+    })
+  })
+})
