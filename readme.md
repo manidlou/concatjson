@@ -30,13 +30,12 @@ _`somefile (contains concatenated JSON objects)`_
 const fs = require('fs')
 const cj = require('concatjson')
 
-fs.createReadStream('./somefile').pipe(cj.parse()).on('error', (err) => {
-  console.error(err)
-}).on('data', (obj) => {
-  // obj is a js object
-}).on('end', () => {
-  console.log('finished successfully.')
-})
+fs.createReadStream('./somefile')
+  .pipe(cj.parse())
+  .on('error', (err) => { console.error(err) })
+  .on('data', (obj) => {
+    // obj is a js object
+  })
 ```
 **concatjson.serialize()**
 
@@ -55,7 +54,8 @@ ser.on('data', (dat) => {
   // dat is stringified JSON
 })
 ```
-#####_append object(s) to a file_
+#####_append object to a file_
+_Inspired by [https://github.com/jprichardson/node-jsonfile](https://github.com/jprichardson/node-jsonfile)_
 ```js
 const fs = require('fs')
 const cj = require('concatjson')
@@ -65,12 +65,8 @@ var w = fs.createWriteStream('./somefile', {flags: 'a'})
 var ser = cj.serialize()
 
 // listen to all error events
-w.on('error', (err) => {
-  console.error(err)
-})
-ser.on('error', (err) => {
-  console.error(err)
-})
+w.on('error', (err) => { console.error(err) })
+ser.on('error', (err) => { console.error(err) })
 
 ser.write({foo: 'bar'})
 ser.end()
