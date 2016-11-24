@@ -53,6 +53,7 @@ ser.on('data', (dat) => {
 ```
 #####_append object(s) to a file_
 ```js
+const fs = require('fs')
 const cj = require('concatjson')
 
 // use flag 'a' for appending
@@ -60,10 +61,10 @@ var w = fs.createWriteStream('./somefile', {flags: 'a'})
 var ser = cj.serialize()
 
 // listen to all error events
-ser.on('error', (err) => {
+w.on('error', (err) => {
   console.error(err)
 })
-w.on('error', (err) => {
+ser.on('error', (err) => {
   console.error(err)
 })
 
