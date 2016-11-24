@@ -12,37 +12,37 @@ function _count (str, c) {
 }
 
 function parse () {
-  function parseObj (obj) {
-    if (obj === '') {
+  function parser (dat) {
+    if (dat === '') {
       return null
     } else {
-      var dat
+      var obj
       try {
-        dat = JSON.parse(obj)
+        obj = JSON.parse(dat)
       } catch (err) {
         if (err) {
-          var open = _count(obj, '{')
-          var close = _count(obj, '}')
+          var open = _count(dat, '{')
+          var close = _count(dat, '}')
           if (open === close) {
-            obj = '{' + obj + '}'
+            dat = '{' + dat + '}'
           }
           if (open !== close && open > close) {
-            obj = obj + '}'
+            dat = dat + '}'
           }
           if (open !== close && open < close) {
-            obj = '{' + obj
+            dat = '{' + dat
           }
           try {
-            dat = JSON.parse(obj)
+            obj = JSON.parse(dat)
           } catch (err) {
             this.emit('error', err)
           }
         }
       }
-      return dat
+      return obj
     }
   }
-  return split('}{', parseObj)
+  return split('}{', parser)
 }
 
 function serialize () {
