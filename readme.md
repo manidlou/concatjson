@@ -27,7 +27,9 @@ _`somefile (contains concatenated JSON objects)`_
 ```
 
 ```js
+const fs = require('fs')
 const cj = require('concatjson')
+
 fs.createReadStream('./somefile').pipe(cj.parse()).on('error', (err) => {
   console.error(err)
 }).on('data', (obj) => {
