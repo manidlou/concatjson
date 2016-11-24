@@ -6,13 +6,13 @@
 
 _Inspired by [https://github.com/maxogden/ndjson](https://github.com/maxogden/ndjson)_
 
-`concatjson` is [concatenated JSON](https://en.wikipedia.org/wiki/JSON_Streaming) streaming parser/serializer + appender for [node.js](https://nodejs.org).
+`concatjson` is [concatenated JSON](https://en.wikipedia.org/wiki/JSON_Streaming) streaming parser/serializer for [node.js](https://nodejs.org).
 
 ###Install
 
 `npm i concatjson`
 
-###Streaming
+###Usage
 
 **concatjson.parse()**
 
@@ -51,44 +51,27 @@ ser.on('data', (dat) => {
   // dat is stringified JSON
 })
 ```
-
-###Appending
-
-You can use this function to append either an object, or contents (concatenated JSON objects) of a file, to another file.
-
-**concatjson.append(file, data, cb)**
-
- * `file` `{String}` file path
- * `data` `{Object | String}`
-  * `{Object}` an object
-  * `{String}` path to another file
- * `cb` `{Function}`
-  * `err` `{Error | null}`
-
-appends `data` to `file`, returns `cb` with `err` or `null`. If `data` is a string, it must be path to another file.
+######Append object(s) to a file
 
 ```js
 const cj = require('concatjson')
-var file = './somefile'
-var dataToAppend = {foo: 'bar'}
-cj.append(file, dataToAppend, (err) => {
-  if (err) {
-    console.error(err)
-  } else {
-    console.log('appended successfully.')
-  }
+
+// use flag 'a' for appending
+var w = fs.createWriteStream('./somefile', {flags: 'a'})
+var ser = cj.serialize()
+
+// listen to all error events
+ser.on('error', (err) => {
+  console.error(err)
 })
-```
-```js
-const cj = require('concatjson')
-var file = './somefile'
-var dataToAppend = './anotherfile'
-cj.append(file, dataToAppend, (err) => {
-  if (err) {
-    console.error(err)
-  } else {
-    console.log('appended successfully.')
-  }
+w.on('error', (err) => {
+  console.error(err)
+})
+
+ser.write({foo: 'bar'})
+ser.end()
+ser.pipe(w).on('finish', () => {
+  console.log('appended successfully.')
 })
 ```
 ###License

@@ -1,5 +1,4 @@
 'use strict'
-const fs = require('fs')
 const thru = require('through2')
 const split = require('split2')
 
@@ -49,36 +48,7 @@ function serialize () {
   })
 }
 
-function append (file, dat, cb) {
-  cb = cb || function () {}
-  if (typeof dat === 'object') {
-    var ser = serialize()
-    ser.write(dat)
-    ser.end()
-    ser.pipe(fs.createWriteStream(file, {flags: 'a'})).on('error', (err) => {
-      return cb(err)
-    }).on('finish', () => {
-      return cb()
-    })
-  } else if (typeof dat === 'string') {
-    fs.createReadStream(dat).on('error', (err) => {
-      return cb(err)
-    }).pipe(parse()).on('error', (err) => {
-      return cb(err)
-    }).pipe(serialize()).on('error', (err) => {
-      return cb(err)
-    }).pipe(fs.createWriteStream(file, {flags: 'a'})).on('error', (err) => {
-      return cb(err)
-    }).on('finish', () => {
-      return cb()
-    })
-  } else {
-    return cb(new TypeError('data must be of type string or object.'))
-  }
-}
-
 module.exports = {
   parse: parse,
-  serialize: serialize,
-  append: append
+  serialize: serialize
 }
