@@ -1,0 +1,37 @@
+{
+  "name": "concatjson",
+  "version": "1.0.0",
+  "description": "concatenated json streaming parser/serializer",
+  "main": "concatjson.js",
+  "scripts": {
+    "test": "standard && node ./test/test.js | tap-spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mawni/concatjson.git"
+  },
+  "keywords": [
+    "concatenated-json",
+    "concatjson",
+    "json streaming"
+  ],
+  "author": "Mawni Maghsoudlou",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mawni/concatjson/issues"
+  },
+  "homepage": "https://github.com/mawni/concatjson#readme",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "dependencies": {
+    "split2": "^2.1.0",
+    "through2": "^2.0.1"
+  },
+  "devDependencies": {
+    "rimraf": "^2.5.4",
+    "standard": "^8.6.0",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.3"
+  }
+}
