@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/mawni/concatjson#readme",
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=4.0.0"
   },
   "dependencies": {
     "split2": "^2.1.0",
