@@ -3,7 +3,7 @@ const fs = require('fs')
 const path = require('path')
 const os = require('os')
 const rimraf = require('rimraf')
-const cjs = require('../')
+const cj = require('../')
 var test = require('tape')
 var testdir
 
@@ -15,12 +15,12 @@ test('+ parse() > when nested object is the first item - should parse concatenat
   var obj1 = {id: 1, name: 'one', more: {has: 'nested', stuff: {foo: 'bar'}}}
   var obj2 = {id: 2, name: 'two'}
   var obj3 = {id: 3, name: 'three'}
-  var ser = cjs.serialize()
+  var ser = cj.serialize()
   ser.write(obj1)
   ser.write(obj2)
   ser.write(obj3)
   ser.end()
-  var parser = cjs.parse()
+  var parser = cj.parse()
   ser.pipe(parser)
   parser.on('error', (err) => {
     t.error(err)
@@ -46,12 +46,12 @@ test('+ parse() > when nested object is the last item - should parse concatenate
   var obj1 = {id: 1, name: 'one'}
   var obj2 = {id: 2, name: 'two'}
   var obj3 = {id: 3, name: 'three', more: {has: 'nested', stuff: {foo: 'bar'}}}
-  var ser = cjs.serialize()
+  var ser = cj.serialize()
   ser.write(obj1)
   ser.write(obj2)
   ser.write(obj3)
   ser.end()
-  var parser = cjs.parse()
+  var parser = cj.parse()
   ser.pipe(parser)
   parser.on('error', (err) => {
     t.error(err)
@@ -77,12 +77,12 @@ test('+ parse() > when nested object is neither the first nor the last item - sh
   var obj1 = {id: 1, name: 'one'}
   var obj2 = {id: 2, name: 'two', more: {has: 'nested', stuff: {foo: 'bar'}}}
   var obj3 = {id: 3, name: 'three'}
-  var ser = cjs.serialize()
+  var ser = cj.serialize()
   ser.write(obj1)
   ser.write(obj2)
   ser.write(obj3)
   ser.end()
-  var parser = cjs.parse()
+  var parser = cj.parse()
   ser.pipe(parser)
   parser.on('error', (err) => {
     t.error(err)
@@ -108,12 +108,12 @@ test('+ parse() > when data has multiple nested objects - should parse concatena
   var obj1 = {id: 1, name: 'one', more: {has: 'nested', stuff: {corge: {thud: 'waldo'}}}}
   var obj2 = {id: 2, name: 'two', more: {has: 'nested', stuff: {foo: 'bar'}}}
   var obj3 = {id: 3, name: 'three', more: {has: 'nested', stuff: {baz: 'qux'}}}
-  var ser = cjs.serialize()
+  var ser = cj.serialize()
   ser.write(obj1)
   ser.write(obj2)
   ser.write(obj3)
   ser.end()
-  var parser = cjs.parse()
+  var parser = cj.parse()
   ser.pipe(parser)
   parser.on('error', (err) => {
     t.error(err)
@@ -142,7 +142,7 @@ test('+ parse() > when data has multiple nested objects - should parse concatena
 test('+ serialize() > should serialize data and emit stringified JSON objects', (t) => {
   var obj1 = {id: 1, name: 'one', more: {has: 'nested', stuff: {corge: {thud: 'waldo'}}}}
   var obj2 = {id: 2, name: 'two', more: {has: 'nested', stuff: {foo: 'bar'}}}
-  var ser = cjs.serialize()
+  var ser = cj.serialize()
   ser.write(obj1)
   ser.write(obj2)
   ser.end()
@@ -166,16 +166,16 @@ test('+ append() > when data is an object - should append stringified JSON objec
   var obj1 = {id: 1, name: 'one', more: {has: 'nested', stuff: {corge: {thud: 'waldo'}}}}
   var obj2 = {id: 2, name: 'two', more: {has: 'nested', stuff: {foo: 'bar'}}}
   var obj3 = {id: 3, name: 'three', more: {has: 'nested', stuff: {baz: 'qux'}}}
-  var ser = cjs.serialize()
+  var ser = cj.serialize()
   ser.write(obj1)
   ser.write(obj2)
   ser.end()
   ser.pipe(fs.createWriteStream(file)).on('error', (err) => {
     t.error(err)
   }).on('finish', () => {
-    cjs.append(file, obj3, (err) => {
+    cj.append(file, obj3, (err) => {
       t.error(err, 'should be null')
-      var parser = cjs.parse()
+      var parser = cj.parse()
       fs.createReadStream(file).pipe(parser)
       parser.on('error', (err) => {
         t.error(err)
@@ -211,19 +211,19 @@ test('+ append() > when data is another file - should append the file contents t
   var file2 = path.join(testdir, 'somefile2')
   var obj1 = {id: 1, name: 'one', more: {has: 'nested', stuff: {foo: 'bar'}}}
   var obj2 = {id: 2, name: 'two', more: {has: 'nested', stuff: {baz: 'qux'}}}
-  var ser = cjs.serialize()
+  var ser = cj.serialize()
   ser.write(obj1)
   ser.end()
   ser.pipe(fs.createWriteStream(file1)).on('error', (err) => {
     t.error(err, 'should be null')
   }).on('finish', () => {
-    var ser = cjs.serialize()
+    var ser = cj.serialize()
     ser.write(obj2)
     ser.end()
     ser.pipe(fs.createWriteStream(file2)).on('error', (err) => {
       t.error(err, 'should be null')
     }).on('finish', () => {
-      var parser = cjs.parse()
+      var parser = cj.parse()
       fs.createReadStream(file1).pipe(parser)
       parser.on('error', (err) => {
         t.error(err)
@@ -239,9 +239,9 @@ test('+ append() > when data is another file - should append the file contents t
         t.notDeepEqual(dat.more.stuff, obj2.more.stuff)
       })
       parser.on('end', () => {
-        cjs.append(file1, file2, (err) => {
+        cj.append(file1, file2, (err) => {
           t.error(err)
-          var parser = cjs.parse()
+          var parser = cj.parse()
           fs.createReadStream(file1).pipe(parser)
           parser.on('error', (err) => {
             t.error(err)
@@ -268,7 +268,7 @@ test('+ append() > when data is another file - should append the file contents t
 test('+ append() > when data is string but not path to another file - should emit ENOENT error', (t) => {
   var file = path.join(testdir, 'somefile')
   var str = `{id: 0, name: 'zero'}`
-  cjs.append(file, str, (err) => {
+  cj.append(file, str, (err) => {
     t.equal(err.code, 'ENOENT')
     t.end()
   })

@@ -23,15 +23,9 @@ function parse () {
         if (err) {
           var open = _count(dat, '{')
           var close = _count(dat, '}')
-          if (open === close) {
-            dat = '{' + dat + '}'
-          }
-          if (open !== close && open > close) {
-            dat = dat + '}'
-          }
-          if (open !== close && open < close) {
-            dat = '{' + dat
-          }
+          if (open === close) dat = `{${dat}}`
+          if (open !== close && open > close) dat = `${dat}}`
+          if (open !== close && open < close) dat = `{${dat}`
           try {
             obj = JSON.parse(dat)
           } catch (err) {
