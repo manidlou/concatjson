@@ -1,6 +1,6 @@
 #concatjson
 
-[![travis](https://img.shields.io/travis/mawni/concatjson/master.svg)](https://travis-ci.org/mawni/concatjson) [![npm](https://img.shields.io/npm/v/concatjson.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/concatjson)
+[![travis](https://img.shields.io/travis/manidlou/concatjson/master.svg)](https://travis-ci.org/manidlou/concatjson) [![npm](https://img.shields.io/npm/v/concatjson.svg?maxAge=2592000?style=flat-square)](https://www.npmjs.com/package/concatjson)
 
 <a href="https://github.com/feross/standard"><img src="https://cdn.rawgit.com/feross/standard/master/sticker.svg" alt="Standard JavaScript" width="100"></a>
 

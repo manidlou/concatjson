@@ -8,19 +8,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mawni/concatjson.git"
+    "url": "git+https://github.com/manidlou/concatjson.git"
   },
   "keywords": [
     "concatenated-json",
     "concatjson",
     "json streaming"
   ],
-  "author": "Mawni Maghsoudlou",
+  "author": "Mani Maghsoudlou",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mawni/concatjson/issues"
+    "url": "https://github.com/manidlou/concatjson/issues"
   },
-  "homepage": "https://github.com/mawni/concatjson#readme",
+  "homepage": "https://github.com/manidlou/concatjson#readme",
   "dependencies": {
     "split2": "^2.1.0",
     "through2": "^2.0.1"

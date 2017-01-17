@@ -1,0 +1,6 @@
+test/
+appveyor.yml
+npm-debug.log
+.gitignore
+.npmignore
+.travis.yml
