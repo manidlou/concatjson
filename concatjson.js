@@ -11,9 +11,9 @@ function parse () {
     } catch (err) {
       const open = _count(dat, '{')
       const close = _count(dat, '}')
-      if (open === close) dat = `{${dat}}`
-      else if (open > close) dat = `${dat}}`
-      else dat = `{${dat}`
+      if (open > close) dat = `${dat}}`
+      else if (open < close) dat = `{${dat}`
+      else dat = `{${dat}}`
       try {
         obj = JSON.parse(dat)
       } catch (err) {
