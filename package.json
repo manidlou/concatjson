@@ -1,7 +1,7 @@
 {
   "name": "concatjson",
   "version": "1.0.4",
-  "description": "concatenated json streaming parser/serializer",
+  "description": "concatenated JSON streaming parser/serializer",
   "main": "concatjson.js",
   "scripts": {
     "test": "standard && node ./test/test.js | tap-spec"
