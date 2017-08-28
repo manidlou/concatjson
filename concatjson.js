@@ -37,8 +37,11 @@ function serialize () {
 
 function _count (str, c) {
   let count = 0
+  let inContent = false
   for (let i = 0; i < str.length; i += 1) {
-    if (str.charAt(i) === c) count += 1
+    if (str.charAt(i) === '"') {
+      if (!(i > 0 && str.charAt(i - 1) === '\\')) inContent = !inContent
+    } else if (str.charAt(i) === c && !inContent) count += 1
   }
   return count
 }

@@ -167,3 +167,34 @@ test('+ stringify() alias > should serialize data and emit stringified JSON obje
     })
   })
 })
+
+test('+ parse() > when >1 JSON objects are in the stream and the nonfirst has a curly bracket in its contents', t => {
+  const obj1 = {id: 1, name: 'one', more: {has: 'nested', stuff: {foo: 'bar'}}}
+  const obj2 = {id: 2, name: 'two', bracket: '{'}
+  const obj3 = {id: 3, name: 'three', bracketWithQuoteBefore: '"{'}
+  const ser = cj.serialize()
+  ser.write(obj1)
+  ser.write(obj2)
+  ser.write(obj3)
+  ser.end()
+  const parser = cj.parse()
+  ser.pipe(parser)
+  parser.on('error', err => {
+    t.error(err)
+  })
+  parser.once('data', dat => {
+    t.equal(dat.id, obj1.id)
+    t.equal(dat.name, obj1.name)
+    t.deepEqual(dat.more, obj1.more)
+    t.deepEqual(dat.more.stuff, obj1.more.stuff)
+    parser.once('data', dat => {
+      t.equal(dat.id, obj2.id)
+      t.equal(dat.name, obj2.name)
+      parser.once('data', dat => {
+        t.equal(dat.id, obj3.id)
+        t.equal(dat.name, obj3.name)
+        t.end()
+      })
+    })
+  })
+})
