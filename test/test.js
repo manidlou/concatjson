@@ -198,3 +198,38 @@ test('+ parse() > when >1 JSON objects are in the stream and the nonfirst has a 
     })
   })
 })
+
+test('+ parse() > more curly brackets in object contents', t => {
+  const obj1 = {id: 1, name: 'one', bracket: '}'}
+  const obj2 = {id: 2, name: 'two', bracketWithQuoteBefore: '"}'}
+  const obj3 = {id: 3, name: 'three', bracket: '{}'}
+  const obj4 = {id: 4, name: 'four', bracketWithQuoteBefore: '"{}'}
+  const ser = cj.serialize()
+  ser.write(obj1)
+  ser.write(obj2)
+  ser.write(obj3)
+  ser.write(obj4)
+  ser.end()
+  const parser = cj.parse()
+  ser.pipe(parser)
+  parser.on('error', err => {
+    t.error(err)
+  })
+  parser.once('data', dat => {
+    t.equal(dat.id, obj1.id)
+    t.equal(dat.name, obj1.name)
+    parser.once('data', dat => {
+      t.equal(dat.id, obj2.id)
+      t.equal(dat.name, obj2.name)
+      parser.once('data', dat => {
+        t.equal(dat.id, obj3.id)
+        t.equal(dat.name, obj3.name)
+        parser.once('data', dat => {
+          t.equal(dat.id, obj4.id)
+          t.equal(dat.name, obj4.name)
+          t.end()
+        })
+      })
+    })
+  })
+})
