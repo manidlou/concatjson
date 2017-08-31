@@ -1,6 +1,6 @@
 {
   "name": "concatjson",
-  "version": "1.0.5",
+  "version": "2.0.0",
   "description": "concatenated JSON streaming parser/serializer",
   "main": "concatjson.js",
   "scripts": {
