@@ -3,14 +3,16 @@ const thru = require('through2')
 const split = require('split2')
 
 function parse () {
+  return split('}{', parseStream)
+
   function parseStream (dat) {
     if (!dat) return null
     let obj
     try {
       obj = JSON.parse(dat)
     } catch (err) {
-      const open = _count(dat, '{')
-      const close = _count(dat, '}')
+      const open = count(dat, '{')
+      const close = count(dat, '}')
       if (open > close) dat = `${dat}}`
       else if (open < close) dat = `{${dat}`
       else dat = `{${dat}}`
@@ -22,7 +24,17 @@ function parse () {
     }
     return obj
   }
-  return split('}{', parseStream)
+
+  function count (str, ch) {
+    let c = 0
+    let inContent = false
+    for (let i = 0; i < str.length; i += 1) {
+      if (str.charAt(i) === '"') {
+        if (!(i > 0 && str.charAt(i - 1) === '\\')) inContent = !inContent
+      } else if (str.charAt(i) === ch && !inContent) c += 1
+    }
+    return c
+  }
 }
 
 function serialize () {
@@ -33,17 +45,6 @@ function serialize () {
       return cb(err)
     }
   })
-}
-
-function _count (str, c) {
-  let count = 0
-  let inContent = false
-  for (let i = 0; i < str.length; i += 1) {
-    if (str.charAt(i) === '"') {
-      if (!(i > 0 && str.charAt(i - 1) === '\\')) inContent = !inContent
-    } else if (str.charAt(i) === c && !inContent) count += 1
-  }
-  return count
 }
 
 module.exports = {
