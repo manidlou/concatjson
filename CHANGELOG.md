@@ -14,3 +14,4 @@
 - Initial release
 
 [#1]: https://github.com/manidlou/concatjson/issues/1 "concatjson explodes with strings including a {"
+[#5]: https://github.com/manidlou/concatjson/pull/5 "concatjson#4 support concatenated JSON delimited with whitespace"
