@@ -233,3 +233,34 @@ test('+ parse() > more curly brackets in object contents', t => {
     })
   })
 })
+
+test('+ parse() > test whitespace allowed between concatenated objects', t => {
+  const Readable = require('stream').Readable;
+  const out = new Readable;
+  out._read = function noop() {};
+
+  const parser = cj.parse();
+  out.pipe(parser);
+
+  /*
+   * This is the (second) example from the "Concatenated JSON" section from
+   * the Wikipedia article on "JSON Streaming."
+   */
+  out.push('{"some":"thing\\n"}\n');
+  out.push('{"may": {\n');
+  out.push('  "include":"nested",\n');
+  out.push(' "objects":[\n');
+  out.push('      "and","arrays"\n');
+  out.push(' ]\n');
+  out.push('}}\n');
+  out.push(null);
+
+  parser.once('data', dat => {
+    t.equal(dat.some, 'thing\n')
+    parser.once('data', dat => {
+      t.deepEqual(dat.may,
+        { include: 'nested', objects: [ 'and', 'arrays' ] });
+      t.end()
+    })
+  })
+})
