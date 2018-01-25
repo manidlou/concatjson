@@ -3,7 +3,7 @@ const thru = require('through2')
 const split = require('split2')
 
 function parse () {
-  return split('}{', parseStream)
+  return split(/}\s*{/, parseStream)
 
   function parseStream (dat) {
     if (!dat) return null
