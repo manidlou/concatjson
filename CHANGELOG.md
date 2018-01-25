@@ -1,7 +1,12 @@
+2.0.1 / 2018-01-25
+------------------
+
+- Add support for concatenated JSON objects with whitespace. [#5] ([@bcantrill](https://github.com/bcantrill))
+
 2.0.0 / 2017-08-30
 ------------------
 
-- Fix bug when JSON object contains `{` and/or `}`. [#1] [@Superlokkus](https://github.com/Superlokkus)
+- Fix bug when JSON object contains `{` and/or `}`. [#1] ([@Superlokkus](https://github.com/Superlokkus))
 
 1.0.0 / 2016-11-24
 ------------------
