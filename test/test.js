@@ -3,9 +3,9 @@ const cj = require('../')
 const test = require('tape')
 
 test('+ parse() > when nested object is the first item - should parse concatenated JSON stream and emit JSON objects', t => {
-  const obj1 = {id: 1, name: 'one', more: {has: 'nested', stuff: {foo: 'bar'}}}
-  const obj2 = {id: 2, name: 'two'}
-  const obj3 = {id: 3, name: 'three'}
+  const obj1 = { id: 1, name: 'one', more: { has: 'nested', stuff: { foo: 'bar' } } }
+  const obj2 = { id: 2, name: 'two' }
+  const obj3 = { id: 3, name: 'three' }
   const ser = cj.serialize()
   ser.write(obj1)
   ser.write(obj2)
@@ -34,9 +34,9 @@ test('+ parse() > when nested object is the first item - should parse concatenat
 })
 
 test('+ parse() > when nested object is the last item - should parse concatenated JSON stream and emit JSON objects', t => {
-  const obj1 = {id: 1, name: 'one'}
-  const obj2 = {id: 2, name: 'two'}
-  const obj3 = {id: 3, name: 'three', more: {has: 'nested', stuff: {foo: 'bar'}}}
+  const obj1 = { id: 1, name: 'one' }
+  const obj2 = { id: 2, name: 'two' }
+  const obj3 = { id: 3, name: 'three', more: { has: 'nested', stuff: { foo: 'bar' } } }
   const ser = cj.serialize()
   ser.write(obj1)
   ser.write(obj2)
@@ -65,9 +65,9 @@ test('+ parse() > when nested object is the last item - should parse concatenate
 })
 
 test('+ parse() > when nested object is neither the first nor the last item - should parse concatenated JSON stream and emit JSON objects', t => {
-  const obj1 = {id: 1, name: 'one'}
-  const obj2 = {id: 2, name: 'two', more: {has: 'nested', stuff: {foo: 'bar'}}}
-  const obj3 = {id: 3, name: 'three'}
+  const obj1 = { id: 1, name: 'one' }
+  const obj2 = { id: 2, name: 'two', more: { has: 'nested', stuff: { foo: 'bar' } } }
+  const obj3 = { id: 3, name: 'three' }
   const ser = cj.serialize()
   ser.write(obj1)
   ser.write(obj2)
@@ -96,9 +96,9 @@ test('+ parse() > when nested object is neither the first nor the last item - sh
 })
 
 test('+ parse() > when data has multiple nested objects - should parse concatenated JSON stream and emit JSON objects', t => {
-  const obj1 = {id: 1, name: 'one', more: {has: 'nested', stuff: {corge: {thud: 'waldo'}}}}
-  const obj2 = {id: 2, name: 'two', more: {has: 'nested', stuff: {foo: 'bar'}}}
-  const obj3 = {id: 3, name: 'three', more: {has: 'nested', stuff: {baz: 'qux'}}}
+  const obj1 = { id: 1, name: 'one', more: { has: 'nested', stuff: { corge: { thud: 'waldo' } } } }
+  const obj2 = { id: 2, name: 'two', more: { has: 'nested', stuff: { foo: 'bar' } } }
+  const obj3 = { id: 3, name: 'three', more: { has: 'nested', stuff: { baz: 'qux' } } }
   const ser = cj.serialize()
   ser.write(obj1)
   ser.write(obj2)
@@ -131,8 +131,8 @@ test('+ parse() > when data has multiple nested objects - should parse concatena
 })
 
 test('+ serialize() > should serialize data and emit stringified JSON objects', t => {
-  const obj1 = {id: 1, name: 'one', more: {has: 'nested', stuff: {corge: {thud: 'waldo'}}}}
-  const obj2 = {id: 2, name: 'two', more: {has: 'nested', stuff: {foo: 'bar'}}}
+  const obj1 = { id: 1, name: 'one', more: { has: 'nested', stuff: { corge: { thud: 'waldo' } } } }
+  const obj2 = { id: 2, name: 'two', more: { has: 'nested', stuff: { foo: 'bar' } } }
   const ser = cj.serialize()
   ser.write(obj1)
   ser.write(obj2)
@@ -150,8 +150,8 @@ test('+ serialize() > should serialize data and emit stringified JSON objects', 
 })
 
 test('+ stringify() alias > should serialize data and emit stringified JSON objects', t => {
-  const obj1 = {id: 1, name: 'one', more: {has: 'nested', stuff: {corge: {thud: 'waldo'}}}}
-  const obj2 = {id: 2, name: 'two', more: {has: 'nested', stuff: {foo: 'bar'}}}
+  const obj1 = { id: 1, name: 'one', more: { has: 'nested', stuff: { corge: { thud: 'waldo' } } } }
+  const obj2 = { id: 2, name: 'two', more: { has: 'nested', stuff: { foo: 'bar' } } }
   const ser = cj.stringify()
   ser.write(obj1)
   ser.write(obj2)
@@ -169,9 +169,9 @@ test('+ stringify() alias > should serialize data and emit stringified JSON obje
 })
 
 test('+ parse() > when >1 JSON objects are in the stream and the nonfirst has a curly bracket in its contents', t => {
-  const obj1 = {id: 1, name: 'one', more: {has: 'nested', stuff: {foo: 'bar'}}}
-  const obj2 = {id: 2, name: 'two', bracket: '{'}
-  const obj3 = {id: 3, name: 'three', bracketWithQuoteBefore: '"{'}
+  const obj1 = { id: 1, name: 'one', more: { has: 'nested', stuff: { foo: 'bar' } } }
+  const obj2 = { id: 2, name: 'two', bracket: '{' }
+  const obj3 = { id: 3, name: 'three', bracketWithQuoteBefore: '"{' }
   const ser = cj.serialize()
   ser.write(obj1)
   ser.write(obj2)
@@ -200,10 +200,10 @@ test('+ parse() > when >1 JSON objects are in the stream and the nonfirst has a 
 })
 
 test('+ parse() > more curly brackets in object contents', t => {
-  const obj1 = {id: 1, name: 'one', bracket: '}'}
-  const obj2 = {id: 2, name: 'two', bracketWithQuoteBefore: '"}'}
-  const obj3 = {id: 3, name: 'three', bracket: '{}'}
-  const obj4 = {id: 4, name: 'four', bracketWithQuoteBefore: '"{}'}
+  const obj1 = { id: 1, name: 'one', bracket: '}' }
+  const obj2 = { id: 2, name: 'two', bracketWithQuoteBefore: '"}' }
+  const obj3 = { id: 3, name: 'three', bracket: '{}' }
+  const obj4 = { id: 4, name: 'four', bracketWithQuoteBefore: '"{}' }
   const ser = cj.serialize()
   ser.write(obj1)
   ser.write(obj2)
@@ -259,7 +259,7 @@ test('+ parse() > test whitespace allowed between concatenated objects', t => {
     t.equal(dat.some, 'thing\n')
     parser.once('data', dat => {
       t.deepEqual(dat.may,
-        { include: 'nested', objects: [ 'and', 'arrays' ] })
+        { include: 'nested', objects: ['and', 'arrays'] })
       t.end()
     })
   })
